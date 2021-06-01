@@ -60,7 +60,7 @@ function generateTitleLinks(){
         const linkHTML = `<li><a href="#${articleId}"><span>${titleInnerText}</span></a></li>`;
 
         /* [DONE] insert link into titleList */
-        titlesList.innerHTML += linkHTML;
+        titlesList.insertAdjacentHTML('beforeend', linkHTML);
     });
 
     const links = document.querySelectorAll('.titles a');
