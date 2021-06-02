@@ -13,6 +13,9 @@
     },
     "rules": {
         "semi": ["error", "always"],
-        "quotes": ["error", "single", { "allowTemplateLiterals": true }]
+        "quotes": ["error", "single", { "allowTemplateLiterals": true }],
+        "indent": ["error", 4],
+        "no-console": ["off"],
+        "linebreak-style": ["off"]
     }
 }
