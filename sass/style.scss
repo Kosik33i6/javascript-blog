@@ -112,6 +112,10 @@ body {
 .post {
     display: none;
 
+    & .list li {
+        margin-right: 10px;
+    }
+
     &.active {
         display: block;
     }
