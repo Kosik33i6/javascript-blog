@@ -71,3 +71,41 @@ function generateTitleLinks(){
 }
 
 generateTitleLinks();
+
+function generateTags(){
+    /* find all articles */
+    const articles = [...document.querySelectorAll('.post')];
+
+    /* START LOOP: for every article: */
+    articles.forEach(article => {
+        /* find tags wrapper */
+        const tagsList = article.querySelector('.post .list');
+
+        /* make html variable with empty string */
+        tagsList.innerHTML = '';
+
+        /* get tags from data-tags attribute */
+        const articleDataTags = article.dataset['tags'];
+
+        /* split tags into array */
+        const arrayFromDataTags = articleDataTags.split(' ');
+
+        /* START LOOP: for each tag */
+        for(let dataTag of arrayFromDataTags) {
+            /* generate HTML of the link */
+            const link = document.createElement('a');
+            link.setAttribute('href', '#');
+
+            /* add generated code to html variable */
+            link.textContent = dataTag;
+
+            const listItem = document.createElement('li');
+            listItem.appendChild(link);
+
+            /* insert HTML of all the links into the tags wrapper */
+            tagsList.insertAdjacentElement('beforeend', listItem);
+        }
+    });
+}
+
+generateTags();
