@@ -34,7 +34,8 @@ function titleClickHandler(event){
 
 const optArticleSelector = '.post',
     optTitleSelector = '.post-title',
-    optTitleListSelector = '.titles';
+    optTitleListSelector = '.titles',
+    optArticleTagsSelector = '.post-tags .list';
 
 function generateTitleLinks(){
 
@@ -74,12 +75,12 @@ generateTitleLinks();
 
 function generateTags(){
     /* find all articles */
-    const articles = [...document.querySelectorAll('.post')];
+    const articles = [...document.querySelectorAll(optArticleSelector)];
 
     /* START LOOP: for every article: */
     articles.forEach(article => {
         /* find tags wrapper */
-        const tagsList = article.querySelector('.post .list');
+        const tagsList = article.querySelector(optArticleTagsSelector);
 
         /* make html variable with empty string */
         tagsList.innerHTML = '';
