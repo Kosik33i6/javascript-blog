@@ -132,3 +132,34 @@ body {
         margin: 0 10px 0 0;
     }
 }
+
+// Tag sizes
+.list.tags li {
+    display: inline-block;
+    padding: 7px 3.5px;
+}
+
+.tag-size-1 {
+    font-size: 15px;
+    color: royalblue;
+}
+
+.tag-size-2 {
+    font-size: 16px;
+    color: purple;
+}
+
+.tag-size-3 {
+    font-size: 17px;
+    color: teal;
+}
+
+.tag-size-4 {
+    font-size: 18px;
+    color: blue;
+}
+
+.tag-size-5 {
+    font-size: 19px;
+    color: orangered;
+}
