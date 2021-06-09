@@ -16,6 +16,9 @@
         "quotes": ["error", "single", { "allowTemplateLiterals": true }],
         "indent": ["error", 4],
         "no-console": ["off"],
-        "linebreak-style": ["off"]
+        "linebreak-style": ["off"],
+        "globals": {
+            "Handlebars": false
+          }
     }
 }
