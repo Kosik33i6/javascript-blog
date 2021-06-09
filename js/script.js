@@ -119,8 +119,9 @@ function calculateTagClass(count, params) {
     // console.log('normalizedMax: ', normalizedMax);
     // console.log('percentage: ', percentage);
     // console.log('classNumber: ', classNumber);
+    console.log(opt.cloudClassPrefix, classNumber);
 
-    return opt.CloudClassPrefix + classNumber;
+    return opt.cloudClassPrefix + classNumber;
 }
 
 function generateTags(){
