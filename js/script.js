@@ -1,8 +1,11 @@
 'use strict';
 
-// const templates = {
-//     articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML)
-//   }
+const templates = {
+    articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
+    tagLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML),
+    authorLink: Handlebars.compile(document.querySelector('#template-author-link').innerHTML),
+    authorLinkInList: Handlebars.compile(document.querySelector('#template-author-link-in-list').innerHTML),
+  }
 
 const opt = {
     articleSelector: '.post',
@@ -15,18 +18,6 @@ const opt = {
     cloudClassPrefix: 'tag-size-',
     authorsListSelector: '.list.authors',
 };
-
-// const optArticleSelector = '.post',
-//     optTitleSelector = '.post-title',
-//     optTitleListSelector = '.titles',
-//     optArticleTagsSelector = '.post-tags .list',
-//     optArticleAuthorSelector = '.post-author, .list.authors li',
-//     optTagsListSelector = '.tags.list',
-//     optCloudClassCount = 5,
-//     optCloudClassPrefix = 'tag-size-',
-//     optAuthorsListSelector = '.list.authors';
-// optAuthorsInListSelector = '.list.authors li';
-
 
 function titleClickHandler(event){
     event.preventDefault();
@@ -78,12 +69,11 @@ function generateTitleLinks(customSelector = ''){
         const title =  article.querySelector(opt.titleSelector);
 
         /* [DONE] get the title from the title element */
-        const titleInnerText = title.textContent;
+        const articleTitle = title.textContent;
 
         /* [DONE] create HTML of the link */
-        // const linkHTMLData = {id: articleId, title: articleTitle};
-        // const linkHTML = templates.articleLink(linkHTMLData);
-        const linkHTML = `<li><a href="#${articleId}"><span>${titleInnerText}</span></a></li>`;
+        const linkHTMLData = {id: articleId, title: articleTitle};
+        const linkHTML = templates.articleLink(linkHTMLData);
 
         /* [DONE] insert link into titleList */
         titlesList.insertAdjacentHTML('beforeend', linkHTML);
@@ -114,13 +104,6 @@ function calculateTagClass(count, params) {
     const percentage = normalizedCount / normalizedMax;
     const classNumber = Math.floor( percentage * (opt.cloudClassCount - 1) + 1 );
 
-    // console.log('count: ', count);
-    // console.log('normalizedCount: ', normalizedCount);
-    // console.log('normalizedMax: ', normalizedMax);
-    // console.log('percentage: ', percentage);
-    // console.log('classNumber: ', classNumber);
-    console.log(opt.cloudClassPrefix, classNumber);
-
     return opt.cloudClassPrefix + classNumber;
 }
 
@@ -148,14 +131,9 @@ function generateTags(){
         /* START LOOP: for each tag */
         for(let dataTag of articleTagsArray) {
             /* generate HTML of the link */
-            const linkHTML = document.createElement('a');
-            linkHTML.setAttribute('href', `#tag-${dataTag}`);
-
             /* add generated code to html variable */
-            linkHTML.textContent = dataTag;
-
-            const listItem = document.createElement('li');
-            listItem.appendChild(linkHTML);
+            const linkHTMLData = {id: `tag-${dataTag}`, title: dataTag};
+            const linkHTML = templates.tagLink(linkHTMLData);
 
             /* [NEW] check if this link is NOT already in allTags */
             if(!allTags.hasOwnProperty(dataTag)) {
@@ -166,7 +144,7 @@ function generateTags(){
             }
 
             /* insert HTML of all the links into the tags wrapper */
-            tagsList.insertAdjacentElement('beforeend', listItem);
+            tagsList.insertAdjacentHTML('beforeend', linkHTML);
 
             /* END LOOP: for each tag */
         }
@@ -180,9 +158,10 @@ function generateTags(){
     let allTagsHtml ='';
 
     for(let tag in allTags) {
-        const tagLinkHtml = `<li><a class="${calculateTagClass(allTags[tag], tagsParams)}" href="#tag-${tag}">${tag}</a></li>`;
-        // console.log(allTags[tag]);
-        allTagsHtml += tagLinkHtml;
+        const tagLinkHTMLData = {class: calculateTagClass(allTags[tag], tagsParams), id: `tag-${tag}`, title: tag};
+        const tagLinkHTML = templates.tagLink(tagLinkHTMLData);
+
+        allTagsHtml += tagLinkHTML;
     }
 
     tagList.insertAdjacentHTML('beforeend', allTagsHtml);
@@ -257,9 +236,16 @@ function generateAuthors() {
 
         //  * find author in article
         const autorElement = article.querySelector(opt.articleAuthorSelector);
+        // console.log(autorElement);
 
+        // * create author link
+        const authorLinkData = { author };
+        const authorLink = templates.authorLink(authorLinkData);
+
+        // autorElement.innerHTML = `<a href="#">${author}</a>`;
+        autorElement.innerHTML = authorLink;
         // * add author txt to element
-        autorElement.innerHTML = `<a href="#">${author}</a>`;
+        // autorElement.insertAdjacentHTML('afterbegin', authorLink);
     });
     //  * END LOOP
 
@@ -269,10 +255,12 @@ function generateAuthors() {
     //  * START LOOP: for each authors
     authors.forEach(author => {
         //  * create author html element
-        const authorHTML = `<li><a href="#">${author}</a></li>`;
+
+        const authorLinkData = {author};
+        const authorLinkHTML = templates.authorLinkInList(authorLinkData);
 
         //  * add author element to list
-        authorsList.insertAdjacentHTML('beforeend', authorHTML);
+        authorsList.insertAdjacentHTML('beforeend', authorLinkHTML);
     });
 }
 
@@ -280,9 +268,9 @@ generateAuthors();
 
 function authorClickHandler(event) {
     event.preventDefault();
-    console.log(this);
+
     const clickedElement = this;
-    const author = clickedElement.textContent;
+    const author = clickedElement.textContent.replace(/\s\s+/g, '');
     const selector = `[data-author="${author}"]`;
 
     generateTitleLinks(selector);
