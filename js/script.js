@@ -5,7 +5,7 @@ const templates = {
     tagLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML),
     authorLink: Handlebars.compile(document.querySelector('#template-author-link').innerHTML),
     authorLinkInList: Handlebars.compile(document.querySelector('#template-author-link-in-list').innerHTML),
-  }
+};
 
 const opt = {
     articleSelector: '.post',

@@ -6,7 +6,8 @@
     "extends": "eslint:recommended",
     "globals": {
         "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
+        "SharedArrayBuffer": "readonly",
+        "Handlebars": false
     },
     "parserOptions": {
         "ecmaVersion": 2018
@@ -16,9 +17,6 @@
         "quotes": ["error", "single", { "allowTemplateLiterals": true }],
         "indent": ["error", 4],
         "no-console": ["off"],
-        "linebreak-style": ["off"],
-        "globals": {
-            "Handlebars": false
-          }
+        "linebreak-style": ["off"]
     }
 }
